@@ -1,0 +1,87 @@
+project:
+  name: Breast Cancer Risk Classifier
+  version: 1.0.0
+  owner: ml-platform@company.com
+  description: |
+    Demonstration pipeline that predicts malignant vs benign tumors from
+    diagnostic features. Includes end-to-end orchestration from data ingestion
+    to monitoring hooks.
+
+data:
+  source: sklearn.datasets.load_breast_cancer
+  target: target
+  freshness_days: 30
+  schema:
+    mean radius: float
+    mean texture: float
+    mean perimeter: float
+    mean area: float
+    mean smoothness: float
+    mean compactness: float
+    mean concavity: float
+    mean concave points: float
+    mean symmetry: float
+    mean fractal dimension: float
+    radius error: float
+    texture error: float
+    perimeter error: float
+    area error: float
+    smoothness error: float
+    compactness error: float
+    concavity error: float
+    concave points error: float
+    symmetry error: float
+    fractal dimension error: float
+    worst radius: float
+    worst texture: float
+    worst perimeter: float
+    worst area: float
+    worst smoothness: float
+    worst compactness: float
+    worst concavity: float
+    worst concave points: float
+    worst symmetry: float
+    worst fractal dimension: float
+  validations:
+    min_rows: 500
+    max_missing_ratio: 0.05
+    allow_negative: false
+
+splits:
+  test_size: 0.2
+  validation_size: 0.2
+  random_state: 42
+  stratify: true
+
+features:
+  scaling: standard
+  feature_selection:
+    method: variance_threshold
+    threshold: 0.0
+
+training:
+  algorithm: logistic_regression
+  hyperparameters:
+    C: 1.0
+    penalty: l2
+    solver: lbfgs
+    max_iter: 1000
+    class_weight: balanced
+
+experiment:
+  primary_metric: roc_auc
+  guardrails:
+    - metric: precision
+      threshold: 0.9
+    - metric: recall
+      threshold: 0.9
+
+monitoring:
+  drift_threshold: 0.1
+  latency_slo_ms: 200
+  alert_emails:
+    - ml-ops@company.com
+
+ui:
+  port: 8501
+  theme: light
