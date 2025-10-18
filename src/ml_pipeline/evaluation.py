@@ -47,23 +47,25 @@ def _generate_model_card(metrics: Dict[str, float], report: Dict, config: Pipeli
     model_card = Path("docs/MODEL_CARD.md")
     model_card.parent.mkdir(parents=True, exist_ok=True)
     model_card.write_text(
-        f"""# Model Card: {config.project.get('name')}\n\n"
-        f"**Version:** {config.project.get('version')}  \\n"
-        f"**Owner:** {config.project.get('owner')}  \\n"
-        f"**Primary Metric:** {config.experiment.get('primary_metric')}\n\n"
-        "## Evaluation Summary\n"
-        f"- ROC-AUC: {metrics['roc_auc']:.3f}\n"
-        f"- Precision (class 1): {report['1']['precision']:.3f}\n"
-        f"- Recall (class 1): {report['1']['recall']:.3f}\n"
-        f"- F1 (class 1): {report['1']['f1-score']:.3f}\n\n"
-        "## Data\n"
-        "- Source: Breast cancer diagnostic features from scikit-learn.\n"
-        "- Rows: 569, Columns: 30 numeric features.\n\n"
-        "## Ethical Considerations\n"
-        "- Ensure predictions are reviewed by medical professionals.\n"
-        "- Monitor for bias against subpopulations.\n\n"
-        "## Operational Guidance\n"
-        "- Retrain quarterly or when drift exceeds thresholds.\n"
-        "- Monitor latency, accuracy, and alert channels.\n"
+        (
+            f"# Model Card: {config.project.get('name')}\n\n"
+            f"**Version:** {config.project.get('version')}  \\\n"
+            f"**Owner:** {config.project.get('owner')}  \\\n"
+            f"**Primary Metric:** {config.experiment.get('primary_metric')}\n\n"
+            "## Evaluation Summary\n"
+            f"- ROC-AUC: {metrics['roc_auc']:.3f}\n"
+            f"- Precision (class 1): {report['1']['precision']:.3f}\n"
+            f"- Recall (class 1): {report['1']['recall']:.3f}\n"
+            f"- F1 (class 1): {report['1']['f1-score']:.3f}\n\n"
+            "## Data\n"
+            "- Source: Breast cancer diagnostic features from scikit-learn.\n"
+            "- Rows: 569, Columns: 30 numeric features.\n\n"
+            "## Ethical Considerations\n"
+            "- Ensure predictions are reviewed by medical professionals.\n"
+            "- Monitor for bias against subpopulations.\n\n"
+            "## Operational Guidance\n"
+            "- Retrain quarterly or when drift exceeds thresholds.\n"
+            "- Monitor latency, accuracy, and alert channels.\n"
+        )
     )
     LOGGER.info("Model card generated at %s", model_card)

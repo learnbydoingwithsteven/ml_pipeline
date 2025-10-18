@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+from pathlib import Path
 from dataclasses import dataclass
 from typing import Dict, Tuple
 
@@ -64,11 +65,13 @@ def train_model(
     LOGGER.info("Validation metrics: %s", metrics)
     _enforce_quality_gates(metrics, config)
 
-    model_path = "artifacts/models/best_model.joblib"
+    model_dir = Path("artifacts/models")
+    model_dir.mkdir(parents=True, exist_ok=True)
+    model_path = model_dir / "best_model.joblib"
     joblib.dump(best_model, model_path)
     LOGGER.info("Saved trained model to %s", model_path)
 
-    return TrainedModel(estimator=best_model, metrics=metrics, path=model_path)
+    return TrainedModel(estimator=best_model, metrics=metrics, path=str(model_path))
 
 
 def _enforce_quality_gates(metrics: Dict[str, float], config: PipelineConfig) -> None:
