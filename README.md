@@ -32,6 +32,14 @@ Launch the control center UI:
 streamlit run ui/app.py
 ```
 
+Run tests and save results:
+
+```bash
+make test
+```
+
+Test results are saved to the `test_results/` folder with both JUnit XML and HTML reports for easy review and CI/CD integration.
+
 ## Project Structure
 
 ```
@@ -42,6 +50,7 @@ streamlit run ui/app.py
 ├── tests/                # Pytest smoke tests
 ├── ui/                   # Streamlit control center
 ├── artifacts/            # Generated models, metrics, and manifests
+├── test_results/         # Test execution reports (JUnit XML and HTML)
 └── main.py               # CLI entry point
 ```
 
