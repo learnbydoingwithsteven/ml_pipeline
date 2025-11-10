@@ -5,3 +5,4 @@ artifacts/
 .ui_logs/
 .streamlit/
 .DS_Store
+test_results/
